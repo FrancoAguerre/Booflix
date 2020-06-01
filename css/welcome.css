@@ -1,0 +1,53 @@
+
+
+.welcome-top-bar {
+    background: linear-gradient(180deg, rgba(0,0,0,.75) 0%, rgba(0,0,0,0) 100%);
+    display: flex;
+    flex-direction: row-reverse
+}
+
+.welcome-block {
+    height: 50%;
+    position: relative;
+}
+
+.welcome-presentation{
+    width:calc(100% - 320px);
+    text-align: center;
+}
+
+.welcome-logo{
+    position: absolute;
+    top: 33%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.welcome-button{
+    bottom: 0%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.big {
+    padding: 12px;
+    padding-left: 24px;
+    padding-right: 24px;
+    font-size: 20px;
+}
+
+.welcome-text {
+    font-size: 24px;
+}
+
+.best-books-title{
+    font-size:24px;
+    top:15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position:absolute;
+}
+
+.text-shadow {
+    text-shadow: 0px 0px 8px rgba(0,0,0,1)
+}

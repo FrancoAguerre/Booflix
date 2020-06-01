@@ -1,0 +1,66 @@
+
+.profiles-container{
+    display:flex;
+    transform: translate(-50%, -50%) scale(0.8, 0.8);
+    opacity:.0;
+}
+
+.profile{
+    text-align: center;
+    margin:24px;
+    font-size: 20px;
+    opacity: 1;
+    transition: 0.1s;
+    color:white;
+    text-decoration: none;
+}
+    .profile:hover{
+        opacity:1;
+        transform:scale(1.1,1.1);
+    }
+
+    .profile:active{
+        transition: 0s;
+        transform:scale(1,1);
+    }
+
+.profile-pic{
+    height:128;
+    width:128;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: rgba(255,255,255,.25);
+    margin-bottom:16px;
+}
+.go-to-profile-editing-container{
+    display:flex;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity:0;
+    text-decoration: none;
+}
+
+.go-to-profile-editing{
+    display:flex;
+    opacity:.5;
+    color:white;
+}
+
+    .go-to-profile-editing:hover{
+        opacity:1;
+    }
+
+    .go-to-profile-editing:active{
+        opacity: .5;
+    }
+
+.profiles-title{
+    position:absolute;
+    left:50%;
+    top:25%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    opacity:0;
+}

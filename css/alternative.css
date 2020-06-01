@@ -1,0 +1,244 @@
+input[type="radio"] {
+    margin-top: 8px;
+}
+
+.redtext {
+    margin-top: 4px;
+    margin-left: 8px;
+    height: 28px;
+    font-size: 12px;
+    color: red;
+}
+
+.settings-redtext{
+    margin: auto;
+    font-size: 12px;
+    color: red;
+    direction: rtl;
+}
+
+.form {
+    color: red;
+    border-radius: 6px;
+    background-color: white;
+    width: 420px;
+    padding: 32px;
+}
+
+.settings {
+    border-radius: 6px;
+    background-color: white;
+    width: 640px;
+    overflow: hidden;
+    color: dimgray;
+}
+
+.settings-container {
+    padding: 32px;
+    width: 100%;
+    margin: 0px;
+}
+
+.settings-item {
+    display: flex;
+}
+
+.settings-profile-pic-container{
+    display:block;
+}
+
+.settings-profiles {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0px;
+}
+
+.settings-profile-pic {
+    border-radius: 50%;
+    border: 1px solid lightgray;
+    height:64px;
+    width:64px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.settings-profile-pic-editor{
+    display:inline-block;
+    position:absolute;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: rgba(0,0,0,.25);
+    pointer-events: none;
+    margin-top: 1px;
+    margin-left: 1px;
+    height:128px;
+    width:128px;
+}
+
+.settings-profile-pic-advice-container{
+    display:inline-block;
+    position:absolute;
+    overflow: hidden;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,.85);
+    pointer-events: none;
+    margin-top: 1px;
+    margin-left: 1px;
+    height:128px;
+    width:128px;
+    text-align: center;
+
+}
+
+.settings-profile-pic-advice{
+    margin-top:48px;
+}
+
+.settings-profile {
+    width: 96px;
+    margin: 16px;
+    cursor: pointer;
+    color: black;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: .1s;
+}
+
+    .settings-profile:hover {
+        color:rgba(0,0,0,.75);
+        transform:scale(1.1);
+    }
+
+    .settings-profile:active {
+        transition: none;
+        transform:scale(1);
+    }
+
+.settings-profile-add{
+    padding:12px;
+    width:40px;
+    height:40px;
+    margin:16px;
+    margin-top:8px;
+}
+
+.desc {
+    padding-top: 7px;
+    padding-right: 16px;
+}
+
+.tab {
+    text-align: center;
+    padding-top: 32px;
+    padding-bottom: 32px;
+    width: 128px;
+    border-right: 1px solid lightgray;
+    cursor: pointer;
+}
+
+    .tab:hover {
+        color: red;
+    }
+
+    .tab:active {
+        color: gray;
+    }
+
+.tab-active {
+    color: red;
+    text-align: center;
+    padding-top: 32px;
+    padding-bottom: 32px;
+    width: 128px;
+}
+
+.splitter {
+    height: 1px;
+    background-color: lightgray;
+}
+
+.form-foot {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%
+}
+
+.settings-foot {
+    font-size: 16px;
+    position: absolute;
+    bottom: 32px;
+    right: 32px;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.delete-confirmation-container{
+    display:flex;
+    position: absolute;
+    bottom: 32px;
+    margin:0px;
+}
+
+.delete-confirmation{
+    background-color: white;
+    color:red;
+    padding-left:16px;
+    pointer-events:none;
+}
+
+.change-pass {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.submit {
+    float: right;
+    text-align: center;
+    font-size: 16px;
+}
+
+.save {
+    position: absolute;
+    font-size: 16px;
+    bottom: 32px;
+    right: 32px;
+}
+
+.title {
+    font-size: 28px;
+    text-align: center;
+}
+
+.plan-name {
+    color: red;
+    margin: 8px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.plan-text {
+    margin: 16px;
+}
+
+.plan {
+    border: 1px solid lightgray;
+    border-radius: 6px;
+    color: gray;
+    display: inline-block;
+    width: 50%;
+    cursor: pointer;
+}
+
+    .plan:hover {
+        border: 1px solid red;
+    }
+
+    .plan:active {
+        border: 1px solid lightgray;
+    }
+
+.plan-selected{ 
+    border: 1px solid red;
+    color:red;
+}
