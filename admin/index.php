@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   
   <meta charset="UTF-8">
@@ -33,9 +33,9 @@
 		<h1>EDICIÓN</h1>
 		<input type="button" value="Editar Libro" onclick="window.location='select-isbn.php'"/>
 		<input type="button" disabled="true" value="Editar Noticia" onclick="window.location='#'"/>
-		<input type="button" disabled="true" value="Editar Genero" onclick="window.location='#'"/>
-		<input type="button" disabled="true" value="Editar Editorial" onclick="window.location='#'"/>
-		<input type="button" disabled="true" value="Editar Autor" onclick="window.location='#'"/>
+		<input type="button" value="Editar Genero" onclick="window.location='form_edit_genre.php'"/>
+		<input type="button" value="Editar Editorial" onclick="window.location='form_edit_publisher.php'"/>
+		<input type="button" value="Editar Autor" onclick="window.location='form_edit_author.php'"/>
 		
     </div>
 </center>
@@ -45,9 +45,9 @@
 		<h1>ELIMINACIÓN</h1>
 		<input type="button" disabled="true" value="Eliminar Libro" onclick="window.location='#'"/>
 		<input type="button" disabled="true" value="Eliminar Noticia" onclick="window.location='#'"/>
-		<input type="button" disabled="true" value="Eliminar Genero" onclick="window.location='#'"/>
-		<input type="button" disabled="true" value="Eliminar Editorial" onclick="window.location='#'"/>
-		<input type="button" disabled="true" value="Eliminar Autor" onclick="window.location='#'"/>
+		<input type="button" value="Eliminar Genero" onclick="window.location='form_delete_genre.php'"/>
+		<input type="button" value="Eliminar Editorial" onclick="window.location='form_delete_publisher.php'"/>
+		<input type="button" value="Eliminar Autor" onclick="window.location='form_delete_author.php'"/>
 		
     </div>
 </center>
