@@ -40,7 +40,7 @@
 
     $chapters=mysqli_query($conn, "SELECT * FROM chapters WHERE book_id = '$bookId' ORDER BY number");
 
-    $critics=mysqli_query($conn, "SELECT * FROM reviews WHERE book_id = '$bookId' ORDER BY date DESC");
+    $critics=mysqli_query($conn, "SELECT * FROM reviews WHERE book_id = '$bookId' ORDER BY id DESC");
 
     $res1 = mysqli_query($conn, "SELECT * FROM books WHERE author_id = '$authorId' AND id != '$bookId' ORDER BY name ASC");
     $res2 = mysqli_query($conn, "SELECT * FROM books WHERE genre_id = '$genreId' AND id != '$bookId' ORDER BY name ASC ");
