@@ -65,8 +65,6 @@
                     <div  style="padding:8px"> </div>
                     <img class="profile-menu-pic" src=<?php echo $_SESSION['profile-pic'] ?>/>
                 </div>
-                <div style="padding:16px"> </div>
-                <img class="top-bar-button" src="res/bell.png"/>
             </div>
         </div>
         <div id="profile-menu" class="profile-menu-container hidden smooth" onmouseleave="document.getElementById('profile-menu').classList.add('hidden')">

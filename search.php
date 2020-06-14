@@ -1,5 +1,6 @@
 <?php
     include "session.php";
+    include "list.php";
     $sesion = new session();
     try{
         $sesion->auth();
@@ -18,19 +19,6 @@
 
     $res;
 
-    switch($type){
-        case 1: 
-            $res = mysqli_query($conn, "SELECT * FROM books WHERE name LIKE '%$key%'");
-            break;
-        case 2:
-            $authorRes = mysqli_query($conn, "SELECT * FROM authors WHERE name LIKE '%$key%'");
-            $res = mysqli_query($conn, "SELECT * FROM books WHERE id = 99");
-            break;
-        case 3:
-            $genreRes = mysqli_query($conn, "SELECT * FROM genres WHERE name LIKE '%$key%'");
-            $res = mysqli_query($conn, "SELECT * FROM books WHERE id = 99");
-            break;
-        }
 ?>
 
 <html>
@@ -68,6 +56,7 @@
             <div class="top-bar-area ">
                 <form id="search-form" method="GET" class="search-box " action="search.php" onsubmit="return validateSearchBox()">
                     <input name="key" id="search-box" class="search-textbox" placeholder="Buscar..." type="text" value="<?php echo $key ?>"></input>
+                    <input name="type" type="hidden" value="<?php echo $type ?>"></input>
                     <img class="top-bar-button margin-auto" src="res/search.png" onclick="if (validateSearchBox()) document.getElementById('search-form').submit()"/>
                 </form>
             </div>
@@ -77,8 +66,6 @@
                     <div  style="padding:8px"> </div>
                     <img class="profile-menu-pic" src=<?php echo $_SESSION['profile-pic'] ?>/>
                 </div>
-                <div style="padding:16px"> </div>
-                <img class="top-bar-button" src="res/bell.png"/>
             </div>
         </div>
         <div id="profile-menu" class="profile-menu-container hidden smooth" onmouseleave="document.getElementById('profile-menu').classList.add('hidden')">
@@ -111,53 +98,81 @@
             </div>
         </div id="for-footer" class="for-footer" >
             <div class="search-results-container">
-                <div id="search-results" class="search-results">
-                    <div class="w-list-content" >
-                    <?php
-                        while($row=mysqli_fetch_assoc($res)){
-                            $authorId=$row['author_id'];
-                            $authorRow=mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM authors WHERE id = '$authorId'"));
-                            $authorName = $authorRow['name'];
-                            $calification=$row['calification'];
-                            $cover = "src='data:jpg;base64,".base64_encode($row['cover'])."'";
-                    ?>
-                        <a class="list-item" href="<?php echo 'book.php?id='.$row['id'] ?>">
-                            <img class=" list-item-pic" <?php echo $cover ?>/>
-                            <div class="list-item-desc">
-                                <div ><?php echo $row['name'] ?></div>
-                                <div style="padding:8px;"></div>
-                                <div class="list-item-author"><?php echo $authorName ?></div>
-                                <div style="padding:16px;"></div>
-                                <div class="stars">
-                                    <?php
-                                        for($i=0;$i<$calification;$i++){
-                                    ?>
-                                            <img class="star" src="res/star.png"/>
-                                    <?php
-                                        }
-                                        for($i=0;$i<5-$calification;$i++){
-                                    ?>
-                                            <img class="star disabled" src="res/star.png"/>
-                                    <?php
-                                        }
-                                    ?>
-                                </div>
-                            </div>
-                        </a>
-                    <?php  
-                        }
+                <div id="lists">
+<?php
 
-                        if (mysqli_num_rows($res) < 1){
-                    ?>
-                            <div class="absolute-center empty-list-container">
-                                <div class="empty-list-title">
-                                    Sin resultados.
-                                </div>
-                            </div>
-                    <?php
+                    switch($type){
+                        case 1: 
+                            $res = mysqli_query($conn, "SELECT * FROM books WHERE name LIKE '%$key%'");
+?>
+                                <div class="w-list-content" >
+                                <?php
+                                    while($row=mysqli_fetch_assoc($res)){
+                                        if (!($_SESSION['kid'] && $row['is_for_kid'] == 0)){
+                                            $authorId=$row['author_id'];
+                                            $authorRow=mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM authors WHERE id = '$authorId'"));
+                                            $authorName = $authorRow['name'];
+                                            $calification=$row['calification'];
+                                            $cover = "src='data:jpg;base64,".base64_encode($row['cover'])."'";
+                                ?>
+                                            <a class="list-item" href="<?php echo 'book.php?id='.$row['id'] ?>">
+                                                <img class=" list-item-pic" <?php echo $cover ?>/>
+                                                <div class="list-item-desc">
+                                                    <div ><?php echo $row['name'] ?></div>
+                                                    <div style="padding:8px;"></div>
+                                                    <div class="list-item-author"><?php echo $authorName ?></div>
+                                                    <div style="padding:16px;"></div>
+                                                    <div class="stars">
+                                                        <?php
+                                                            for($i=0;$i<$calification;$i++){
+                                                        ?>
+                                                                <img class="star" src="res/star.png"/>
+                                                        <?php
+                                                            }
+                                                            for($i=0;$i<5-$calification;$i++){
+                                                        ?>
+                                                                <img class="star disabled" src="res/star.png"/>
+                                                        <?php
+                                                            }
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                            </a>
+        
+                                <?php  
+                                        }
+                                }
+                        break;
+                        case 2:
+                            $res = mysqli_query($conn, "SELECT * FROM authors WHERE name LIKE '%$key%'");
+                            $listCount = 1;
+                            while($rowAuthor = mysqli_fetch_assoc($res)){
+                                $authorName = $rowAuthor['name'];
+                                $authorId = $rowAuthor['id'];
+                                $rowBook = mysqli_query($conn, "SELECT * FROM books WHERE author_id = '$authorId' ORDER BY name ASC");
+                                showList($listCount, $rowBook, $authorName, $authorName);
+                                $listCount++;
+                            }
+                            break;
+                        case 3:
+                            $res = mysqli_query($conn, "SELECT * FROM genres WHERE desc_spa LIKE '%$key%'");
+                            $listCount = 1;
+                            while($rowGenre = mysqli_fetch_assoc($res)){
+                                $genreName = $rowGenre['desc_spa'];
+                                $genreId = $rowGenre['id'];
+                                $rowBook = mysqli_query($conn, "SELECT * FROM books WHERE genre_id = '$genreId' ORDER BY name ASC");
+                                showList($listCount, $rowBook, $genreName);
+                                $listCount++;
+                            }
+                            break;
                         }
-                    ?>
-                </div>
+                        ?>
+                        </div>
+                        <div id="no-results" class="absolute-center empty-list-container <?php if (mysqli_num_rows($res) > 0) echo "hidden" ?>">
+                            <div class="empty-list-title">
+                                Sin resultados.
+                            </div>
+                        </div>
             </div>
         </div>
     </div>

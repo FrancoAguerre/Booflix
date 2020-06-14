@@ -26,7 +26,7 @@
 		<div id="toast" class="toast" onmouseover="hideToast()">
 			<div id="toast-text" class="full-width no-pointer-actions"></div>
 		</div>
-		<form method="POST" action="signupDB.php" id="signup-form" enctype="multipart/form-data"> 
+		<form method="POST" action="signupDB.php" id="signup-form"> 
 			<div class="form absolute-center box-shadow " id="plans-form">
 				<div style="padding:0.5px;"></div>
 				<div class="title">Elegí un plan</div>

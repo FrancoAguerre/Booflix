@@ -10,14 +10,14 @@ function showList($id, $res, $title, $author = null){
     $logged=true;
     try{
         $sesion->auth();
-        if(mysqli_num_rows($res)==0)
-            return;
+        /*if(mysqli_num_rows($res)==0)
+            return;*/
     } catch (Exception $e) {
         $logged=false;
         $res = mysqli_query($conn, "SELECT * FROM books ORDER BY calification DESC LIMIT 6");
     }
 ?>
-<div class="v-list-container ">
+<div class="v-list-container">
     <div class="v-list-title">
         <?php echo $title ?>
     </div>
@@ -34,50 +34,49 @@ function showList($id, $res, $title, $author = null){
     <div class="v-list-content" id="v-list-<?php echo $id ?>" onscroll="vListScrolled(<?php echo $id ?>)">
         <?php
             while($bookRow=mysqli_fetch_assoc($res)){
-                $authorId=$bookRow['author_id'];
-                $authorName ="";
-                if ($author!=null) $authorName = $author;
-                else {
-                    $authorRow=mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM authors WHERE id = '$authorId'"));
-                    $authorName = $authorRow['name'];
-                }
-                $calification=$bookRow['calification'];
-                $cover = "src='data:jpg;base64,".base64_encode($bookRow['cover'])."'";
+                if (!(($logged && $_SESSION['kid']) && $bookRow['is_for_kid'] == 0)){
+                    $authorId=$bookRow['author_id'];
+                    $authorName ="";
+                    if ($author!=null) $authorName = $author;
+                    else {
+                        $authorRow=mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM authors WHERE id = '$authorId'"));
+                        $authorName = $authorRow['name'];
+                    }
+                    $calification=$bookRow['calification'];
+                    $cover = "src='data:jpg;base64,".base64_encode($bookRow['cover'])."'";
         ?>
-                <a class="list-item" href="<?php
-                                                if ($logged) echo 'book.php?id='.$bookRow['id'];
-                                                else echo 'preview.php?book='.$bookRow['id'];
-                                            ?>">
-                    <img class=" list-item-pic" <?php echo $cover ?>/>
-                    <div class="list-item-desc">
-                        <div ><?php echo $bookRow['name'] ?></div>
-                        <div style="padding:8px;"></div>
-                        <div class="list-item-author"><?php echo $authorName ?></div>
-                        <div style="padding:16px;"></div>
-                        <div class="stars">
-                            <?php
-                                for($i=0;$i<$calification;$i++){
-                            ?>
-                                    <img class="star" src="res/star.png"/>
-                            <?php
-                                }
-                                for($i=0;$i<5-$calification;$i++){
-                            ?>
-                                    <img class="star disabled" src="res/star.png"/>
-                            <?php
-                                }
-                            ?>
+                    <a class="list-item" href="<?php
+                                                    if ($logged) echo 'book.php?id='.$bookRow['id'];
+                                                    else echo 'preview.php?book='.$bookRow['id'];
+                                                ?>">
+                        <img class=" list-item-pic" <?php echo $cover ?>/>
+                        <div class="list-item-desc">
+                            <div ><?php echo $bookRow['name'] ?></div>
+                            <div style="padding:8px;"></div>
+                            <div class="list-item-author"><?php echo $authorName ?></div>
+                            <div style="padding:16px;"></div>
+                            <div class="stars">
+                                <?php
+                                    for($i=0;$i<$calification;$i++){
+                                ?>
+                                        <img class="star" src="res/star.png"/>
+                                <?php
+                                    }
+                                    for($i=0;$i<5-$calification;$i++){
+                                ?>
+                                        <img class="star disabled" src="res/star.png"/>
+                                <?php
+                                    }
+                                ?>
+                            </div>
                         </div>
-                    </div>
-                </a>
-
-        <?php
+                    </a>
+        <?php  
+                }
             }
         ?>
     </div>
 </div>
 <?php
-
 }
-
 ?>

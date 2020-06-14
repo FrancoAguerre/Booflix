@@ -15,6 +15,7 @@
         if($profileRow = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM profiles WHERE id = '$profile'"))){
             $_SESSION['profile-id'] = $profile;
             $_SESSION['profile-name'] = $profileRow['name'];
+			$_SESSION['kid'] = $profileRow['kid'] == 1;
             $avatar;
                 if ($profileRow["img"] == null) 
                     $avatar = "'res/profile.png' ";

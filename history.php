@@ -56,8 +56,6 @@
                     <div  style="padding:8px"> </div>
                     <img class="profile-menu-pic" src=<?php echo $_SESSION['profile-pic'] ?>/>
                 </div>
-                <div style="padding:16px"> </div>
-                <img class="top-bar-button" src="res/bell.png"/>
             </div>
         </div>
         <div id="profile-menu" class="profile-menu-container hidden smooth" onmouseleave="document.getElementById('profile-menu').classList.add('hidden')">
@@ -74,14 +72,12 @@
             </div>  
         </div>
         <div id="for-footer" class="for-footer">
+			<div style="padding:24px"></div>
 			<div id="lists">
-				<div style="padding:24px"></div>
 				<?php 
-					if (mysqli_num_rows($res)>0)
-						showList(1, $res, "Historial");
-					else{
+                    showWrapList(1, $res, "Historial");
 				?>
-					<div class="absolute-center empty-list-container">
+					<div id="no-results" class="absolute-center empty-list-container <?php if (mysqli_num_rows($res) > 0) echo "hidden" ?>">
 						<div class="empty-list-title">
 							Nada por acá.
 						</div>
@@ -90,9 +86,6 @@
 							Aquí aparecerán los libros que hayas leído.
 						</div>
 					</div>
-				<?php 
-				}
-				?>
 			</div>
         </div>
     </div>

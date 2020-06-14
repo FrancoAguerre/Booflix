@@ -50,6 +50,7 @@
             <div class="top-bar-area ">
                 <form id="search-form" method="GET" class="search-box " action="search.php" onsubmit="return validateSearchBox()">
                     <input name="key" id="search-box" class="search-textbox" placeholder="Buscar..." type="text"></input>
+                    <input name="type" type="hidden" value="2"></input>
                     <img class="top-bar-button margin-auto" src="res/search.png" onclick="if (validateSearchBox()) document.getElementById('search-form').submit()"/>
                 </form>
             </div>
@@ -59,8 +60,6 @@
                     <div  style="padding:8px"> </div>
                     <img class="profile-menu-pic" src=<?php echo $_SESSION['profile-pic'] ?>/>
                 </div>
-                <div style="padding:16px"> </div>
-                <img class="top-bar-button" src="res/bell.png"/>
             </div>
         </div>
         <div id="profile-menu" class="profile-menu-container hidden smooth" onmouseleave="document.getElementById('profile-menu').classList.add('hidden')">
