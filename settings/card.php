@@ -13,6 +13,9 @@
                 <img class="margin-16" src="../res/header.png" />
             </a>
 		</div>
+		<div id="toast" class="toast" onmouseover="hideToast()">
+			<div id="toast-text" class="full-width no-pointer-actions"></div>
+		</div>
 		<div style="display:flex" class="settings absolute-center box-shadow">
 			<div>
 				<div style="padding:0.5px;"></div>
@@ -24,22 +27,22 @@
 				<div class="splitter"></div>
 				<div class="tab" onclick="window.location='security.php';">Seguridad</div>
 			</div>
-			<form class="settings-container"method="POST" enctype="multipart/form-data">
+			<form class="settings-container" id="card-edit-form" method="POST" onsubmit="return validatePayment(true)" action="cardDB.php">
 					<div> Nueva tarjeta de débito o crédito</div>
 					<div style="padding:8px;"></div>
-					<input class="textbox width-100 " type="text" pattern="[0-9]*" inputmode="numeric" placeholder="Número de tarjeta" />
+					<input class="textbox width-100 " type="text" pattern="[0-9]*" inputmode="numeric" name="card-number" id="card-number" placeholder="Número de tarjeta" maxlength="16" oninput="verifyPayment()"/>
 					<div style="padding:8px;"></div>
-					<input class="textbox width-100  " type="text" placeholder="Nombre y apellido" />
+					<input class="textbox width-100  " type="text" name="card-name" id="card-name" placeholder="Nombre y apellido" oninput="verifyPayment()"/>
 					<div style="padding:8px;"></div>
 					<div style="display:flex">
-						<input class="textbox width-100 " type="text" placeholder="Vencimiento" />
+						<input class="textbox width-100 " type="text" name="exp-date" id="exp-date" placeholder="Vencimiento" oninput="verifyPayment()"/>
 						<div style="padding:8px;"></div>
-						<input class="textbox width-100 " type="text" placeholder="Código de seguridad" />
+						<input class="textbox width-100 " type="text" name="security-code" id="security-code" placeholder="Código de seguridad" oninput="verifyPayment()"/>
 					</div>
 					<div style="padding:8px;"></div>
-					<input class="textbox width-100 " type="text" placeholder="DNI del titular" />
+					<input class="textbox width-100 " type="text" name="dni" id="dni" placeholder="DNI del titular" oninput="verifyPayment()"/>
 				<div class="settings-foot">
-					<input class="button accent-alt disabled" type="submit" value="Guardar">
+					<input class="button accent-alt disabled" id="payment-next" style="font-size: 16px" type="submit" value="Guardar">
 					<div style="padding:8px;"></div>
 					<a class="button-alt" href='payment.php'>Descartar</a>
 					<div style="padding:8px;"></div>
@@ -58,5 +61,10 @@
             <a class="gray-link" href='../vm.php'>Viking Moon</a>
         </span>
     </div>
+	<script src="../js/settings.js"></script>
+    <script src="../js/scripts-alt.js"></script>
+	<script src="../js/field-validation.js"></script>
+	<script src="../js/card-edit.js"></script>
+	<script src="../js/toast.js"></script>
 </body>
 </html>

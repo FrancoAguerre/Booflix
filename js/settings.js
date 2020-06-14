@@ -7,7 +7,12 @@ window.onload = function () {
             showToast("Algo salió mal. Volvé a intentarlo.");
             break;
         case "#wrong-pass":
-            setRedtext('old-pass', "Contraseña incorrecta",true);
+            try{
+                setRedtext('old-pass', "Contraseña incorrecta",true);
+
+            } catch (exception) {
+                setRedtext('password', "Contraseña incorrecta");
+            }
             break;
     }
 }
@@ -15,7 +20,7 @@ window.onload = function () {
 function verifyProfileEditing(){
     if (document.getElementById('name').value!="") 
         enableNext('profile-next');
-    else
+    else 
         disableNext('profile-next');
 }
 
@@ -25,6 +30,7 @@ function validateProfileEditing(name){
             profileLiveValidation('name');
     } else
         profileLiveValidationOk();
+    return false;
 }
 
 function profileLiveValidationOk(){
@@ -63,6 +69,7 @@ function validateAccountEditing(email){
             emailLiveValidation('email');
     } else
         emailLiveValidationOk();
+    return false;
 }
 
 function emailLiveValidationOk(){
@@ -81,22 +88,41 @@ function selectPlan(id) {
 }
 
 function verifyPassEditing(){
-    if (document.getElementById('old-pass').value!="" && document.getElementById('new-pass').value!="" && document.getElementById('new-pass-conf').value!="")
+    if (document.getElementById('old-pass').value!="" && document.getElementById('new-pass').value!="" && document.getElementById('new-pass-conf').value!=""){
         enableNext('security-next');
-    else
+        return true;
+    }
+    else{
         disableNext('security-next');
+        return false;
+    }
 }
 
 function validatePassEditing(){
 
     if(document.getElementById('old-pass').value != document.getElementById('new-pass').value){
         if (validatePass('new-pass',true) && validatePassConf('new-pass','new-pass-conf',true))
-            document.getElementById('security-form').submit();
-    } else 
+            return true;
+        else
+            return false;
+    } else {
         setRedtext('new-pass', "La contraseña actual y la contraseña nueva deben ser distintas",true);
+        return false;
+    }
     
 }
 
 function editProfilePic(){
     document.getElementById("profile-pic-advice").classList.remove('hidden');
+}
+
+function verifyAccountDel(){
+    if (document.getElementById("password").value!=""){
+        enableNext('delete-next');
+        return true;
+    }
+    else{
+        disableNext('delete-next');
+        return false;
+    }
 }

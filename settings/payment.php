@@ -59,7 +59,6 @@
 		</div>
 	</div>
 
-	<script src="../js/toast.js"></script>
     <div class="footer">
         <span>
             <a class="gray-link" href='help.php'>Ayuda</a>
@@ -69,5 +68,7 @@
             <a class="gray-link" href='../vm.php'>Viking Moon</a>
         </span>
     </div>
+	<script src="../js/toast.js"></script>
+	<script src="../js/settings.js"></script>
 </body>
 </html>

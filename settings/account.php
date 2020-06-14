@@ -52,7 +52,7 @@
 				<div class="splitter"></div>
 				<div class="tab" onclick="window.location='security.php';">Seguridad</div>
 			</div>
-			<form class="settings-container"method="POST" id="account-form" enctype="multipart/form-data" action="accountDB.php">
+			<form class="settings-container"method="POST" id="account-form" onsubmit="return validateAccountEditing('<?php echo $email ?>')" action="accountDB.php">
 				<div class="settings-item">
 					<div class="desc">Correo electrónico</div>
 					<div class="flex-grow">
@@ -70,8 +70,8 @@
 				<div style="padding:8px;"></div>
 				<div> El cambio de plan se verá reflejado en el próximo período.</div>
 				<p class="<?php if ($profilesCount<=2) echo "hidden" ?>" style="color:red;">Para cambiarte al plan <?php echo $stName ?> debes tener <?php echo $st["max_profiles"] ?> perfiles o menos.</p>
-				<input class="hidden" name="plan" id="selected-plan" value="<?php echo $plan ?>"/>
-				<a class="button accent-alt save" id="account-next" onclick="validateAccountEditing('<?php echo $email ?>')">Guardar</a>
+				<input type="hidden" name="plan" id="selected-plan" value="<?php echo $plan ?>"/>
+				<input class="button accent-alt save" id="account-next" style="font-size: 16px" type="submit" value="Guardar">
 			</form>
 		</div>
     </div>

@@ -6,7 +6,7 @@ var _oldNews = 1;
 var _totalNewsCount;
 
 function currentPage(){
-    path = window.location.pathname.split("/");
+    var path = window.location.pathname.split("/");
     return path[path.length - 1].split('.')[0];
 }
 
@@ -14,13 +14,36 @@ function isOverflown(ctrl) {
     return ctrl.scrollWidth > ctrl.clientWidth;
 }
 
-function checkListsOverflow(){
+function checkSearchResults(){
+    var searchType;
+    try {
+        searchType = window.location.href.split("&")[1].toLowerCase();
+    } catch (exception) {
+        searchType = "type=1";
+    }
+
+    if (searchType == "type=1"){
+        var list = document.getElementById("lists").children[0];
+        if (list.innerText=="") 
+            document.getElementById("no-results").classList.remove("hidden");
+    } else 
+        checkListsContent(true, true);
+}
+
+function checkListsContent(checkUnderflow = false, showMessage = false){
     var children = document.getElementById("lists").children;
     for (var i = 1; i <= children.length; i++) {
         var list = document.getElementById("v-list-" + i);
+        if (checkUnderflow && list.children.length < 1) {
+            for (j = 0; j < 4; j++){
+                children[i-1].children[0].remove();
+            }
+			if (showMessage && children[0].innerText=="")
+                document.getElementById("no-results").classList.remove("hidden");
+        } else 
+        
         if (list!= null && isOverflown(list))
             document.getElementById('v-scroll-right-' + i).classList.remove('hidden');
-        
     }
 } 
 
@@ -37,34 +60,41 @@ function setFooterPosition(){
         document.getElementById("for-footer").classList.add("for-footer");
 }
 
-function setSearchResultsWidth(){
-    if(document.body.clientWidth<1152){
-        document.getElementById("search-results").style.width="784px";
-    } else {
-        document.getElementById("search-results").style.width="1152px";
-    }
-}
 
 function setOptionsSize(){
     if(document.body.clientWidth<1272){
-        alert("asd");
+        // menucito
     }
+}
+
+function removeLastCriticSplitter(){
+    var critics = document.getElementById('critics-container').children;
+    if (critics[critics.length-1].className=="critic-splitter")
+        critics[critics.length-1].remove();
+}
+
+function checkUriHash(){
+    if (window.location.hash == "#critics")
+        document.getElementById("critics").classList.remove("hidden");
 }
 
 window.onload = function () {
     if (this.currentPage()=="index" || this.currentPage()==""){
         initializeNews();
-        checkListsOverflow();
+        checkListsContent();
         setOptionsSize();
     }
     else if (this.currentPage()=="welcome"|| this.currentPage()=="genres"|| this.currentPage()=="authors"|| this.currentPage()=="book"){
-        checkListsOverflow();
         setOptionsSize();
-    }
-    else if (this.currentPage()=="search"){
-        setSearchResultsWidth();
+        checkListsContent(true, false);
+        if (this.currentPage()=="book") {
+            removeLastCriticSplitter();
+            checkUriHash();
+        }
+    } else if (this.currentPage()=="search"){
         setOptionsSize();
-    } else if(this.currentPage()=="favorites"|| this.currentPage()=="history"){
+        checkSearchResults();
+    }else if(this.currentPage()=="favorites"|| this.currentPage()=="history"){
         setOptionsSize();
     }
 
@@ -72,11 +102,8 @@ window.onload = function () {
 }
 
 window.onresize = function() {
-    if (this.currentPage()=="index" || this.currentPage()=="" || this.currentPage()=="genres"|| this.currentPage()=="authors"|| this.currentPage()=="book"){
-        checkListsOverflow();
-        setOptionsSize();
-    } else if (this.currentPage()=="search") {
-        setSearchResultsWidth();
+    if (this.currentPage()=="index" || this.currentPage()=="" || this.currentPage()=="genres"|| this.currentPage()=="authors"|| this.currentPage()=="book" || this.currentPage()=="search"){
+        checkListsContent();
         setOptionsSize();
     } else if(this.currentPage()=="favorites"|| this.currentPage()=="history"){
         setOptionsSize();
@@ -157,4 +184,41 @@ function toggleFavs(bookId){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", uri + ".php?id=" + bookId , true);
     xmlhttp.send();
+}
+
+function report(id){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200){
+            if (this.response == 1) {
+                document.getElementById("report-"+id).remove();
+                showToast("Reseña reportada.");
+            } else {
+                showToast("Algo salió mal, volvé a intentarlo.");
+            }
+        }
+    };
+    uri = "critics/report.php?id=";
+    xmlhttp.open("GET", uri + id, true);
+    xmlhttp.send();
+}
+
+function fillReviewStars(val){
+    for(i = 1; i<=val;i++){
+    //alert("new-review-star-"+i);
+        document.getElementById("new-review-star-"+i).classList.add("new-review-star-selected");
+    }
+    for(i = val+1; i<=5;i++){
+        document.getElementById("new-review-star-"+i).classList.remove("new-review-star-selected");
+    }
+
+    document.getElementById("new-review-calif").value=val;
+    document.getElementById("critic-submit").classList.remove("disabled");
+}
+
+function checkNewReviewComment(){
+    if (document.getElementById("new-review-comment").value!="")
+        document.getElementById("critic-submit").classList.remove("disabled");
+    else if (document.getElementById("new-review-calif").value==0)
+        document.getElementById("critic-submit").classList.add("disabled");
 }

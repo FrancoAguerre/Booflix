@@ -28,7 +28,7 @@
                 
             </div>
             <div class="settings-container">
-                <form method="POST" enctype="multipart/form-data" id="security-form" action="securityDB.php">
+                <form method="POST" enctype="multipart/form-data" id="security-form" onsubmit="return validatePassEditing()" action="securityDB.php">
                     <div>Cambiar contraseña</div>
                     <div style="padding:8px;"></div>
                     <div class="change-pass">
@@ -43,17 +43,17 @@
                             <input class="textbox width-100" type="password" id="new-pass-conf" placeholder="Confirmación de contraseña" oninput="verifyPassEditing()"/>
                         </div>
                     </div>
-                </form>
-                    <div style="padding:8px;"></div>
+                    <div style="padding:16px;"></div>
                     <div class="settings-item">
                         <div class="desc">Eliminar cuenta: </div>
                     <a class="button-alt " href='delete.php'>Eliminar</a>
                     </div>
                     <div class="settings-foot" id="form-foot">
-                        <a class="button accent-alt disabled" id="security-next" onclick="validatePassEditing()">Guardar</a>
+                        <input class="button accent-alt disabled" id="security-next" style="font-size: 16px" type="submit" value="Confirmar">
                         <div style="padding:8px;"></div>
                         <div id="redtext" class="settings-redtext" style="max-width:332px"></div>
                     </div>
+                </form>
             </div>
         </div>
     </div>

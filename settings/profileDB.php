@@ -20,10 +20,13 @@
        $pic_type=explode ('/',$_FILES ['profile-pic']['type']);
        $pic_size=$_FILES ['profile-pic']['size'];
     }   
+    $parental = false;
+    if (isset($_POST["parental"]))
+        $parental = $_POST["parental"] == "on";
     $res;
 
     if(validateName($name)){
-        if ($profileId!=0)
+        if ($profileId!=0){
             if ($pic!=null)
                 if(validatePic($pic,$pic_type,$pic_size))
                     $res = mysqli_query($conn,"UPDATE profiles SET name='$name', img='$pic' WHERE id=$profileId");
@@ -31,6 +34,17 @@
                     $res = false;
             else
                 $res = mysqli_query($conn,"UPDATE profiles SET name='$name' WHERE id=$profileId");
+            
+            if ($profileId == $_SESSION['profile-id']){
+                $_SESSION['profile-name'] = $name;
+                $profileRow = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM profiles WHERE id = '$profileId'"));
+                if ($profileRow["img"] != null) {
+                    $avatar = "'data:jpg;base64,".base64_encode($profileRow['img'])."'";
+                    $_SESSION['profile-pic'] = $avatar;
+                }
+
+            }
+        }
         else{
             $userRow = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM users WHERE id = '$userId'"));
             $plan = $userRow['type'];
@@ -43,13 +57,13 @@
             if ($profilesCount<$maxProfiles){
                 if ($pic!=null)
                     if(validatePic($pic,$pic_type,$pic_size))
-                        $res = mysqli_query($conn,"INSERT INTO profiles (name,img,user_id) VALUES ('$name','$pic','$userId')");
+                        $res = mysqli_query($conn,"INSERT INTO profiles (name,img,user_id, kid) VALUES ('$name','$pic','$userId','$parental')");
                     else
                         $res = false;
                 else
-                    $res = mysqli_query($conn,"INSERT INTO profiles (name,user_id) VALUES ('$name','$userId')");
+                    $res = mysqli_query($conn,"INSERT INTO profiles (name,user_id, kid) VALUES ('$name','$userId','$parental')");
             } else
-                $res = false;
+                $res = false;            
         }
     } else
         $res=false;

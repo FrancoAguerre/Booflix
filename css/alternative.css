@@ -63,6 +63,16 @@ input[type="radio"] {
     cursor: pointer;
 }
 
+.settings-profile-pic-small {
+    border-radius: 50%;
+    border: 1px solid lightgray;
+    height:60px;
+    width:60px;
+    overflow: hidden;
+    cursor: pointer;
+    padding:2px;
+}
+
 .settings-profile-pic-editor{
     display:inline-block;
     position:absolute;
@@ -241,4 +251,12 @@ input[type="radio"] {
 .plan-selected{ 
     border: 1px solid red;
     color:red;
+}
+
+.settings-parental-message{
+    right:initial; 
+    color:green; 
+    display:flex;
+    position: absolute;
+    bottom:16px;
 }

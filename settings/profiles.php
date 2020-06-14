@@ -54,6 +54,7 @@
 			<div class="settings-container" style="padding:16px">
 					<form class="settings-profiles" method="POST" id="profile-selector-form" action="profile.php">
 						<?php
+							$kidCounter = 0;
 							while($profileRow=mysqli_fetch_assoc($res)){
 								$avatar;
 								if ($profileRow["img"] == null) 
@@ -62,7 +63,7 @@
 									$avatar = "src='data:jpg;base64,".base64_encode($profileRow['img'])."'";
 						?>
 								<a class="settings-profile" href="profile.php?id=<?php echo $profileRow['id'] ?>">
-									<img class="margin-16 settings-profile-pic" style="margin-top:8px;" <?php echo $avatar?>/>
+									<img class="margin-16 settings-profile-pic-small" style="margin-top:8px;<?php if ($profileRow["kid"]) { echo "border-color:green"; $kidCounter++;} ?>" <?php echo $avatar?>/>
 									<div style="text-align:center;margin-bottom:8px;"><?php echo $profileRow["name"] ?></div>
 								</a>
 						<?php
@@ -81,7 +82,16 @@
 						?>
 						<input style="position:absolute;" id="profile-id" name="profile-id" class="hidden">
 					</form>
-					
+					<?php 
+						if ($kidCounter>0) {
+					?>
+							<div class="settings-parental-message">
+									<div style="border-radius:50%; border: 1px solid green; height:16px; width:16px; margin-right:8px; "></div>
+									<div style="margin-top:1px">Perfil con control parental</div>
+							</div>
+					<?php 
+						}
+					?>
 			</div>
 		</div>
 	</div>

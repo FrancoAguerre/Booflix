@@ -16,7 +16,7 @@
     $newPass = md5($newPassRaw);		// I KNOW!!!
 
     if(validatePass($newPassRaw)){
-        if ($row = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM users WHERE id = '$id' AND pass='$oldPass'"))){
+        if (mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM users WHERE id = '$id' AND pass='$oldPass'"))){
             mysqli_query($conn,"UPDATE users SET pass='$newPass' WHERE id='$id' AND pass='$oldPass'");
             header('Location: security.php#ok');
         } else 

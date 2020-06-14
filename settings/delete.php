@@ -24,16 +24,18 @@
                     <div class="tab-active">Seguridad</div>
                     
                 </div>
-                <form class="settings-container" method="POST" enctype="multipart/form-data">
+                <form class="settings-container" method="POST" onsubmit="return verifyAccountDel()" action="deleteDB.php">
                     <div class="desc">Eliminar cuenta</div>
                     <p>Esta acción eliminará toda tu información en el  sitio y no se puede deshacer.</p>
                     <p>Para continuar confirmá tu contraseña: </p>
-                    <input class="textbox" type="password" placeholder="Contraseña" />
-
+                    <input class="textbox" id="password" name ="password" type="password" placeholder="Contraseña" oninput="verifyAccountDel()"/>
+                    <div id="password-redtext" class="redtext"></div>
                     <div class="settings-foot">
-                        <input class="button accent-alt" style="font-size: 16px" type="submit" value="Confirmar">
+                        <input class="button accent-alt disabled" id="delete-next" style="font-size: 16px" type="submit" value="Confirmar">
                         <div style="padding:8px;"></div>
                         <a class="button-alt" href='security.php'>Cancelar</a>
+                        <div style="padding:8px;"></div>
+                        <div id="redtext" class="settings-redtext" style="max-width:332px"></div>
                     </div>
                 </form>
             </div>
@@ -48,5 +50,8 @@
             <a class="gray-link" href='../vm.php'>Viking Moon</a>
         </span>
     </div>
+    <script src="../js/scripts-alt.js"></script>
+    <script src="../js/settings.js"></script>
+	<script src="../js/field-validation.js"></script>
 </body>
 </html>

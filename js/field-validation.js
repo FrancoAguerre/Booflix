@@ -22,13 +22,13 @@ function clearRedtext(ctrl,unique=false){
     redtext.innerText = "";   
 }
 
-function validateName(ctrl){
+function validateName(ctrl,unique=false){
     if (!document.getElementById(ctrl).value.trim().match(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)) 
     {
-        setRedtext(ctrl, "Sólo se permiten caracteres alfabéticos");
+        setRedtext(ctrl, "Sólo se permiten caracteres alfabéticos",unique);
         return false;
     } else {
-        clearRedtext(ctrl);
+        clearRedtext(ctrl,unique);
         return true;
     }
 }
@@ -83,11 +83,11 @@ function emailLiveValidation(ctrl){
 
 function cardLiveValidation(number,name,exp,sec,dni){
     var frm = new FormData();
-    frm.append("card-number", number);
-    frm.append("card-name", name);
-    frm.append("expiration-date", exp);
-    frm.append("security-code", sec);
-    frm.append("dni", dni);
+    frm.append("card-number", document.getElementById(number).value);
+    frm.append("card-name", document.getElementById(name).value);
+    frm.append("expiration-date", document.getElementById(exp).value);
+    frm.append("security-code", document.getElementById(sec).value);
+    frm.append("dni", document.getElementById(dni).value);
     
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
@@ -131,40 +131,40 @@ function validatePassConf(ctrl1, ctrl2,unique=false) {
     }
 }
 
-function validateExpDate(ctrl){
+function validateExpDate(ctrl,unique=false){
     var date = document.getElementById(ctrl).value;
     var month = date.split('/')[0];
     if (date.match(/^\d{2}\/\d{2}$/) && month <=12){
         var year = date.split('/')[1];
         var today = new Date();
         if(today.getYear()+1900<20+year){
-            clearRedtext(ctrl);
+            clearRedtext(ctrl,unique);
             return true;
         } else if(today.getYear()+1900>20+year) {
-            setRedtext(ctrl, "La tarjeta está vencida");
+            setRedtext(ctrl, "La tarjeta está vencida",unique);
             return false;
         } else {
             if(today.getMonth()+1<=month){
-                clearRedtext(ctrl);
+                clearRedtext(ctrl,unique);
                 return true;
             } else {
-                setRedtext(ctrl, "La tarjeta está vencida");
+                setRedtext(ctrl, "La tarjeta está vencida",unique);
                 return false;
             }
         }
     } else {
-        setRedtext(ctrl, "La fecha debe tener el formato mm/aa");
+        setRedtext(ctrl, "La fecha debe tener el formato mm/aa",unique);
         return false;
     }
 }
 
-function validateNumber(ctrl){
+function validateNumber(ctrl,unique=false){
     if (document.getElementById(ctrl).value.trim().match(/^[0-9]+$/)) {
-        clearRedtext(ctrl);
+        clearRedtext(ctrl,unique);
         return true;
     }
     else {
-        setRedtext(ctrl, "Sólo se permiten caracteres numéricos");
+        setRedtext(ctrl, "Sólo se permiten caracteres numéricos",unique);
         return false;
     }
 }

@@ -34,9 +34,10 @@ function disableNext(ctrl){
          disableNext("payment-next");  
  }
  
- function validatePayment(){
-     if(validateNumber('card-number') && validateName('card-name') && validateExpDate('exp-date') && validateNumber('security-code') && validateNumber('dni'))
+ function validatePayment(unique=false){
+     if(validateNumber('card-number',unique) && validateName('card-name',unique) && validateExpDate('exp-date',unique) && validateNumber('security-code',unique) && validateNumber('dni',unique))
         cardLiveValidation('card-number','card-name','exp-date','security-code','dni');
+    return false;
  }
 
  function verifyLogin(){

@@ -58,12 +58,12 @@
 						&nbspVolvé a cliquear para confirmar.
 					</div>
 				</div>
-				<form method="POST" enctype="multipart/form-data" id="profile-form" action="profileDB.php">
+				<form method="POST" enctype="multipart/form-data" id="profile-form" onsubmit=" return validateProfileEditing('<?php echo $name ?>')" action="profileDB.php">
 					<div class="center-content center-text" >
 							<div class="settings-profile-pic-container ">
 								<div class="settings-profile-pic-advice-container hidden smooth" class="test" id="profile-pic-advice">
 									<div class="settings-profile-pic-advice">
-									Guardar para ver los cambios
+										Guardar para ver los cambios
 									</div>
 								</div>
 								<div class="settings-profile-pic-editor hidden smooth " class="test" id="profile-pic-editor">
@@ -77,11 +77,23 @@
 							<input class="textbox center-text" type="text" id="name" name="name" placeholder="Tu nombre" oninput="verifyProfileEditing()" value="<?php echo $name; ?>"/>
 							<div id="name-redtext" class="redtext"></div>
 					</div>
-					<input style="position:absolute;" id="profile-id" name="profile-id" class="hidden" value="<?php echo $profileId ?>">
+					<input id="profile-id" name="profile-id" type="hidden" value="<?php echo $profileId ?>">
 					<div class="settings-foot smooth" id="form-foot">
-						<a class="button accent-alt <?php if($name=="") echo "disabled" ?>" id="profile-next" onclick="validateProfileEditing('<?php echo $name ?>')">Guardar</a>
+						<input class="button accent-alt <?php if($name=="") echo "disabled" ?>" id="profile-next" style="font-size: 16px" type="submit" value="Guardar">
 						<div style="padding:8px;"></div>
 						<a class="button-alt" href='profiles.php'>Cancelar</a>
+					<?php
+						if ($profileId==0){
+					?>
+						<div style="padding:16px;"></div>
+						<div>
+							<div style="padding:4px;"></div>
+							<input type="checkbox" id="parental" name="parental" >
+							<label for="parental">Habilitar control parental</label>
+						</div>
+					<?php
+						}
+					?>
 					</div>
 					<input class="hidden" id="profile-pic-file-input" name="profile-pic" type="file" accept=".jpg" onchange="validateProfilePic('profile-pic-file-input','profile-pic')" />
 				</form>
