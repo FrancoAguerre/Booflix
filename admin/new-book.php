@@ -48,7 +48,8 @@ Autor: <select name="Autor">
     ?>
 </select>
 <p>Descripción: <input type="text" name="descripcion" size='34' required></p>
-<p>PDF: <input type="file" name="pdf" size='35' required></p>
+<p>Título del primer capítulo: <input type="text" name="cap" size='40' placeholder='Opcional'></p>
+<p>Primer Capítulo: <input type="file" name="pdf" size='35' required ></p>
 <p>Introducción: <input type="file" name="intro" size='35' required></p>
 <p>ISBN: <input type="text" name="isbn" size='30' maxlength="13" minlength="13" required placeholder="Sólo caracteres numéricos"></p>
 <p>+18: <input type="checkbox" name="kids" size='35' ></p>

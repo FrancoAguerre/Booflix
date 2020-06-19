@@ -1,4 +1,5 @@
 <?php
+    include "../db.php";
     include "../session.php";
     $session = new session();
     $conn = conn(); 
@@ -8,9 +9,8 @@
             die;
     } catch (Exception $e) {
     }
-
-    $res_publish=mysqli_query($conn, "SELECT * FROM publishers");
-
+    
+   $res_autor=mysqli_query($conn, "SELECT * FROM authors");
 ?>
 
 <head>
@@ -18,21 +18,21 @@
      <link rel="stylesheet" href="../css/general.css">
 </head>
 <body style = "background-color: white; color: black" >
-<div align = "center" class= "absolute-center" style = "border:1px solid gray; padding: 16px; border-radius: 6px;" ><h1> EDITAR EDITORIAL </h1>
+<div align = "center" class= "absolute-center" style = "border:1px solid gray; padding: 16px; border-radius: 6px;" ><h1> EDITAR AUTOR </h1>
 
-<form align = "center" action="edit_publisherDB.php" method="POST">
+<form align = "center" action="edit_authorDB.php" method="POST">
  <br>
- <p>Editorial: <select name="id_publisher1">
+ <p>Autor: <select name="id_author1">
     <?php
-        while($publishRow=mysqli_fetch_assoc($res_publish)){
-            $publish=$publishRow["name"];
+        while($autorRow=mysqli_fetch_assoc($res_autor)){
+            $autor=$autorRow["name"];
             ?>
-            <option value=<?php echo $publishRow['id']?>> <?php echo $publish?> </option>
+            <option value= <?php echo $autorRow['id']?>> <?php echo $autor?> </option>
             <?php
         }
     ?>
-</select></p>
- <p>Nuevo nombre:<input type="text" name="publisher2" required="required" size='40'></p>
+ </select></p>
+ <p>Nuevo nombre:<input type="text" name="author2" required="required" size='40'></p>
  <p>
     <input type="submit" value="Modificar">
  </p>

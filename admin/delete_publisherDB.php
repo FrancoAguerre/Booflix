@@ -3,12 +3,17 @@
 include "../db.php";
 	$conn = conn();
 	
-	$publisher = trim($_POST["publisher"]);
-    
-	if ( 0 < mysqli_num_rows(mysqli_query($conn,"SELECT name FROM publishers WHERE name = '$publisher'"))){
-		mysqli_query($conn,"DELETE FROM publishers WHERE name = '$publisher'");
+	$id_publisher = trim($_POST["id_publisher"]);
+	
+	mysqli_query($conn,"DELETE FROM publishers WHERE id = '$id_publisher'");	
+	$dato = mysqli_fetch_assoc(mysqli_query($conn,"SELECT id FROM publishers WHERE id = '$id_publisher'"));
+	if($id_publisher == $dato['id']){
+			
+		header("Location:form_delete_publisher.php#deletePublisherFail");
+	}
+	else{
+           
 		header("Location:form_delete_publisher.php#deletePublisher");
 	}
-	else
-		header("Location:form_delete_publisher.php#deletePublisherFail");
+
 ?>

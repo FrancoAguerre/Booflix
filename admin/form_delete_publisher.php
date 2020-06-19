@@ -1,3 +1,18 @@
+<?php
+    include "../session.php";
+    $session = new session();
+    $conn = conn(); 
+    try{
+        $session->auth();
+        if (!$_SESSION['admin']) 
+            die;
+    } catch (Exception $e) {
+    }
+    
+    $res_publish=mysqli_query($conn, "SELECT * FROM publishers");
+    
+?>
+
 <head>
      <meta charset="UTF-8">
      <link rel="stylesheet" href="../css/general.css">
@@ -7,10 +22,18 @@
 
 <form align = "center" action="delete_publisherDB.php" method="POST">
  <br>
- <p>Editorial:<input type="text" name="publisher" required="required" size='40'></p>
+ <p>Editorial: <select name="id_publisher">
+    <?php
+        while($publishRow=mysqli_fetch_assoc($res_publish)){
+            $publish=$publishRow["name"];
+            ?>
+            <option value=<?php echo $publishRow['id']?>> <?php echo $publish?> </option>
+            <?php
+        }
+    ?>
+</select></p>
  <p>
     <input type="submit" value="Eliminar">
-    <input type="reset" value="Borrar">
  </p>
 <br>
 </form>

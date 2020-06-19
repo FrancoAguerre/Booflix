@@ -23,9 +23,7 @@
     }
     $genero=$_POST["Generos"];
     $editorial=$_POST["Editorial"];
-    $pdf;//=addslashes(file_get_contents($_FILES ['pdf']['tmp_name'])); //probar
-    $pdf_type;//=explode ('/',$_FILES ['pdf']['type']); //probar
-    $intro; //version futura
+    $intro = $_FILES['intro']['tmp_name'];
     
     if($kids=='on'){
         $kids=false; //por funcionamiento de 
@@ -35,7 +33,9 @@
 
     if($res=mysqli_query($conn, "UPDATE `books` SET name='$titulo',author_id='$autor',description='$descripcion',is_for_kid='$kids',isbn='$new_isbn',
     up_date='$fecha_publi',down_date='$fecha_baja',genre_id='$genero',publish_id='$editorial'".$portada." WHERE isbn='$old_isbn'")){
-         header('Location: select-isbn.php#ok');
+        $book_id=mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM books WHERE isbn='$new_isbn' "))['id'];
+        move_uploaded_file($intro, "../books/book-".$book_id."-0.pdf");
+        header('Location: select-isbn.php#ok');
     } else 
        header('Location: edit-book.php?isbn='.$old_isbn.'#error');
 ?>

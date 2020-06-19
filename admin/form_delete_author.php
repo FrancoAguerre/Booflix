@@ -1,3 +1,18 @@
+<?php
+    include "../session.php";
+    $session = new session();
+    $conn = conn(); 
+    try{
+        $session->auth();
+        if (!$_SESSION['admin']) 
+            die;
+    } catch (Exception $e) {
+    }
+
+    $res_autor=mysqli_query($conn, "SELECT * FROM authors");
+
+?>
+
 <head>
      <meta charset="UTF-8">
      <link rel="stylesheet" href="../css/general.css">
@@ -7,10 +22,18 @@
 
 <form align = "center" action="delete_authorDB.php" method="POST">
  <br>
- <p>Autor:<input type="text" name="author" required="required" size='40'></p>
+ <p>Autor: <select name="id_author">
+    <?php
+        while($autorRow=mysqli_fetch_assoc($res_autor)){
+            $autor=$autorRow["name"];
+            ?>
+            <option value= <?php echo $autorRow['id']?>> <?php echo $autor?> </option>
+            <?php
+        }
+    ?>
+ </select></p>
  <p>
     <input type="submit" value="Eliminar">
-    <input type="reset" value="Borrar">
  </p>
 <br>
 </form>

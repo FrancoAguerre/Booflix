@@ -26,17 +26,20 @@
                     $id = $paymentRow['id'];
                     $month1 = date('m');
                     $month2 = date('m', strtotime($paymentRow['last_payment_date']));
-
                     $datesMonthDiff = $month1 - $month2;
                     if($datesMonthDiff>=1 || $paymentRow['last_payment_state']==0){
                       if ($mp->pay('','','','','') && mysqli_query($conn,"UPDATE payment SET last_payment_date='$date', last_payment_state='1' WHERE id = '$id'"))
-                        echo nl2br ("user " . $paymentRow['user_id'] . " pagó.\n");
+                        echo nl2br ("user " . $paymentRow['user_id'] . " Pagó.\n");
                       else{
-                        echo nl2br ("user " . $paymentRow['user_id'] . " falló el pago.\n");
+                        echo nl2br ("user " . $paymentRow['user_id'] . " Falló el pago.\n");
                         $badCounter++;
                       }
                       $counter++; }
                 }
+                
+
+
+                
 ?>
                </div>
                <form action="execute_payment.php">

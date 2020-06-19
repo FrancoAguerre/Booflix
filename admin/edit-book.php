@@ -41,7 +41,6 @@ Autor: <select name="Autor">
     ?>
 </select>
 <p>Descripción: <input type="text" name="descripcion" size='34' required="required" value = '<?php echo $registro["description"] ?>'></p>
-<p>PDF*: <input type="file" name="pdf" size='35' ></p>
 <p>Introducción*: <input type="file" name="intro" size='35' ></p>
 <p>ISBN: <input type="text" name="nisbn" size='30' maxlength="13" required="required"  minlength="13" value = '<?php echo $registro["isbn"] ?>'></p>
 <p>+18: <input type="checkbox" <?php if($registro["is_for_kid"] == "0") echo "checked" ?> name="kids" size='35' ></p>
@@ -69,7 +68,7 @@ Editorial: <select name="Editorial">
     ?>
 </select>
 <p>
-* Modifique estos campos sólo si es necesario.
+* Modifique este campo sólo si es necesario.
 </p>
 <p>
    <input type="submit" value="Guardar">
