@@ -12,9 +12,6 @@ window.onload = function () {
         case "#invalid_isbn":
             showToast("No se encontró un libro asociado a ese ISBN");
             break;
-        case "#invalid_news":
-            showToast("No se encontró una noticia asociada a ese título");
-            break;
 		case "#addgen":
             showToast("Se agregó el nuevo genero con Exito");
             break;
@@ -32,15 +29,6 @@ window.onload = function () {
             break;
         case "#addpublisherfail":
             showToast("La editorial ya se encuentra cargada");
-            break;
-        case "#invalid_chapter":
-            showToast("Ese número de capitulo ya fue utilizado");
-            break;
-        case "#deletebook":
-            showToast("Se eliminó el libro con exito");
-            break;
-        case "#deletebookFail":
-            showToast("No se encontró un libro con ese ISBN");
             break;
     }
 }

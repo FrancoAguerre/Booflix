@@ -19,6 +19,9 @@
     <meta charset="UTF-8">
 </head>
 <body>
+    <div id="toast" class="toast" onmouseover="hideToast()">
+        <div id="toast-text" class="full-width no-pointer-actions"></div>
+    </div>
     <div id="for-footer" class="for-footer">
         <div class="welcome-block books" src="res/logo-large.png">
             <a class="button accent margin-16 box-shadow" style="float:right; " href='login.php'>Iniciar sesión</a>
@@ -52,6 +55,7 @@
             <a class="gray-link" href='vm.php'>Viking Moon</a>
         </span>
     </div>
+	<script src="js/toast.js"></script>
     <script src="js/general.js"></script>
 </body>
 </html>

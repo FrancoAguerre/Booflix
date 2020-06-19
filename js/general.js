@@ -74,14 +74,21 @@ function removeLastCriticSplitter(){
 }
 
 function checkUriHash(){
-    if (window.location.hash == "#critics")
-        document.getElementById("critics").classList.remove("hidden");
+    switch (window.location.hash) {
+        case "#critics":
+            document.getElementById("critics").classList.remove("hidden");
+            break;
+        case "#goodbye":
+            if (this.currentPage()=="welcome")
+                showToast("Eliminaste tu cuenta. ¡Esperamos que vuelvas pronto!");
+            break;
+    }
 }
 
 window.onload = function () {
     if (this.currentPage()=="index" || this.currentPage()==""){
         initializeNews();
-        checkListsContent();
+        checkListsContent(true, false);
         setOptionsSize();
     }
     else if (this.currentPage()=="welcome"|| this.currentPage()=="genres"|| this.currentPage()=="authors"|| this.currentPage()=="book"){
@@ -89,8 +96,8 @@ window.onload = function () {
         checkListsContent(true, false);
         if (this.currentPage()=="book") {
             removeLastCriticSplitter();
-            checkUriHash();
         }
+        checkUriHash();
     } else if (this.currentPage()=="search"){
         setOptionsSize();
         checkSearchResults();

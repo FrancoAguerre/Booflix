@@ -12,14 +12,13 @@
     }
     $conn = conn();
     
+    $profileId = $_SESSION['profile-id'];
     
     $news = mysqli_query($conn, "SELECT * FROM news");
-    
 
-    $res1 = mysqli_query($conn, "SELECT * FROM books WHERE author_id != 6 ORDER BY name ASC");
-    $res2 = mysqli_query($conn, "SELECT * FROM books WHERE author_id = 6 ORDER BY name ASC ");
-    $res3 = mysqli_query($conn, "SELECT * FROM books WHERE genre_id = 5 ORDER BY name ASC ");
-    $res4 = mysqli_query($conn, "SELECT * FROM books WHERE author_id = 5 ORDER BY name ASC ");
+    $res1 = mysqli_query($conn, "SELECT * FROM books ORDER BY calification DESC LIMIT 10");
+
+    $suggestedListsLimit = 2;
 ?>
 <html>
 <head>
@@ -151,10 +150,40 @@
             </div>
         </div>
         <div id="lists" >
-            <?php showList(1, $res1, "Libros")?>
-            <?php showList(2, $res2, "Stephen King", "Stephen King")?>
-            <?php showList(3, $res3, "Terror")?>
-            <?php showList(4, $res4, "Edgar Allan Poe", "Edgar Allan Poe")?>
+            <?php 
+            showList(1, $res1, "Los mejores calificados");
+
+            $suggestedRes = mysqli_query($conn, "SELECT * FROM history WHERE profile_id = '$profileId' ORDER BY date DESC LIMIT $suggestedListsLimit");
+            $noHistory = false;
+            if (mysqli_num_rows($suggestedRes)==0) {
+                $noHistory = true;
+                $suggestedRes = mysqli_query($conn, "SELECT * FROM books ORDER BY calification DESC LIMIT $suggestedListsLimit");
+            }
+
+            $i = 1;
+            while ($res = mysqli_fetch_assoc($suggestedRes)){
+                if ($noHistory)
+                    $lastBookId = $res['id'];
+                else 
+                    $lastBookId = $res['book_id'];
+                $lastBook = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM books WHERE id = '$lastBookId'"));
+                $lastBookAuthorId = $lastBook['author_id'];
+                $lastBookGenreId = $lastBook['genre_id'];
+                $lastBookName = $lastBook['name'];
+                $lastBookAuthor = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM authors WHERE id = '$lastBookAuthorId'"))['name'];
+            
+                $res2 = mysqli_query($conn, "SELECT * FROM books WHERE genre_id = '$lastBookGenreId' AND id != '$lastBookId'");
+                $res3 = mysqli_query($conn, "SELECT * FROM books WHERE author_id = $lastBookAuthorId AND id != '$lastBookId' ORDER BY name ASC ");
+                
+                $moreText = "Porque leíste ";
+                if ($noHistory) $moreText = "Más como ";
+
+                showList($i*2, $res2, $moreText.$lastBookName);
+                showList($i*2+1, $res3, "Más de ". $lastBookAuthor, $lastBookAuthor);
+                $i++;
+            }
+
+            ?>
         </div>
     </div>
     <div class="footer">

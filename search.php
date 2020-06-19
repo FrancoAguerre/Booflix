@@ -4,6 +4,9 @@
     $sesion = new session();
     try{
         $sesion->auth();
+        if (!isset($_SESSION['profile-id'])){
+            header("Location: profiles.php");
+        }
     } catch (Exception $e) {
 		header("Location: login.php#must-login");
     }

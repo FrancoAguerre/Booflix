@@ -11,7 +11,7 @@
 
     $id = $_SESSION['profile-id'];
     
-    $res = mysqli_query($conn, "SELECT * FROM history WHERE profile_id = '$id'");
+    $res = mysqli_query($conn, "SELECT * FROM history WHERE profile_id = '$id' ORDER BY date DESC");
 ?>
 <head>
     <link rel="stylesheet" href="css/general.css">

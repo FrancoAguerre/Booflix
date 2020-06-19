@@ -40,7 +40,7 @@
 
     $chapters=mysqli_query($conn, "SELECT * FROM chapters WHERE book_id = '$bookId' ORDER BY number");
 
-    $critics=mysqli_query($conn, "SELECT * FROM reviews WHERE book_id = '$bookId' ORDER BY id DESC");
+    $critics=mysqli_query($conn, "SELECT * FROM reviews WHERE book_id = '$bookId' ORDER BY date DESC");
 
     $res1 = mysqli_query($conn, "SELECT * FROM books WHERE author_id = '$authorId' AND id != '$bookId' ORDER BY name ASC");
     $res2 = mysqli_query($conn, "SELECT * FROM books WHERE genre_id = '$genreId' AND id != '$bookId' ORDER BY name ASC ");
@@ -113,13 +113,25 @@
                 <div class="white-box-background hidden smooth" id="chapters" onclick="document.getElementById('chapters').classList.add('hidden')">
                     <div class="white-box absolute-center" onclick="event.stopPropagation()">
                             <?php
-                                while($chapter = mysqli_fetch_assoc($chapters)){
+                            while($chapter = mysqli_fetch_assoc($chapters)){
+                                $chapterNum = $chapter['number'];
                             ?>
-                                    <a class="chapter" href="read.php?book=<?php echo $bookId?>&chapter=<?php echo $chapter['number']?>">
-                                        Capítulo <?php echo $chapter['number']?>: <?php echo $chapter['title']?>
-                                    </a>
+                                <a class="chapter" href="read.php?book=<?php echo $bookId?>&chapter=<?php echo $chapterNum?>">
+                                    <div style="display:flex">
+                                        <div style="vertical-align:middle">
+                                            Capítulo <?php echo $chapterNum?>: <?php echo $chapter['title']?>
+                                        </div>
+                                        <?php 
+                                        if (mysqli_num_rows(mysqli_query($conn,"SELECT * FROM history WHERE book_id = '$bookId' AND profile_id = '$id ' AND last_chapter = '$chapterNum'"))) {
+                                        ?>
+                                            <img style="padding-left:16px;" src="res/bookmark.png"/>
+                                        <?php 
+                                        }
+                                        ?>
+                                    </div>
+                                </a>
                             <?php
-                                }
+                            }
                             ?>
                         </div>
                 </div>
@@ -161,7 +173,7 @@
                     if(mysqli_num_rows($critics)>0){
                         while($criticRow = mysqli_fetch_assoc($critics)){
                             $criticId = $criticRow['id'];
-                            if (mysqli_num_rows(mysqli_query($conn, "SELECT * FROM reports WHERE review_id = '$criticId'"))<=5){
+                            if (mysqli_num_rows(mysqli_query($conn, "SELECT * FROM reports WHERE review_id = '$criticId'"))<5){
                                 ?>
                                 <div class="critic" id="critic-<?php echo $criticId ?>">
                                 <?php
@@ -223,7 +235,7 @@
                     } else {
                         ?>
                             <div class="no-critics">
-                                Este libro no tiene comentarios, Soyez le premier!
+                                Este libro no tiene comentarios, sé el primero!
                             </div>
                         <?php
                     }

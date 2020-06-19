@@ -131,14 +131,21 @@ body {
 
 .top-bar-link{
     text-decoration: none;
-    color: rgba(255,255,255,.5);
+    color:white;
+    opacity:.5;
+    display:flex;
+}
+
+.chapter-button{
+    height:24px;
+    width:24px;
 }
 
 .top-bar-link:hover{
-    color:white;
+    opacity:1;
 }
 .top-bar-link:active{
-    color: rgba(255,255,255,.5);
+    opacity:.5;
 }
 
 .top-bar-link-selected{
@@ -761,12 +768,12 @@ body {
      padding:16px;
      background-color: white;
      border-radius: 6px;
-     max-height: 720px;
      overflow: hidden;
      color:black;
  }
 
  .chapter{
+     color:black;
      display:block;
      padding:16px ;
      margin:8px;
@@ -792,7 +799,7 @@ body {
 
  .white-box-scroll{
      overflow-y: auto;
-     max-height:640px
+     max-height:640px;
  }
 
  .critic-user{
@@ -854,7 +861,7 @@ body {
 
  .pdf-viewer{
      width:100%;
-     height:calc(100% - 64px);
+     height:calc(100%);
 
  }
 

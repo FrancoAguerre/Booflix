@@ -4,19 +4,19 @@ window.onload = function () {
             showToast("Se eliminó la editorial con Exito");
             break;
             case "#deletePublisherFail":
-            showToast("La editorial no se ecuentra cargada");
+            showToast("No se puede eliminar una editorial que posee libros asignados");
             break;
             case "#deleteGenre":
             showToast("Se eliminó el genero con Exito");
             break;
             case "#deleteGenreFail":
-            showToast("El genero no se encuentra cargado");
+            showToast("No se puede eliminar un genero que posee libros asignados");
             break;
             case "#deleteAuthor":
             showToast("Se eliminó el autor con exito");
             break;
             case "#deleteAuthorFail":
-            showToast("El autor no se encuentra cargado");
+            showToast("No se puede eliminar un autor que posee libros asignados");
             break;
             case "#editGenre":
             showToast("Se editó el genero con exito");
@@ -44,6 +44,9 @@ window.onload = function () {
             break;
             case "#editAuthorFail2":
             showToast("El autor no se encuentra cargado");
+            break;
+            case "#deleteComment":
+            showToast("El comentario se elimino con exito");
             break;
 
            
